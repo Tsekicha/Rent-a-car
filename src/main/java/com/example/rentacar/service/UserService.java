@@ -8,8 +8,8 @@ import com.example.rentacar.entity.User;
 public interface UserService {
 
     UserResponse registerUser(UserRequest userRequest);
-    //void updatePassword(UserPasswordUpdate user) throws RecordNotFoundException;
+    User updateUser(User user, Long id);
     User findByEmail(String email);
     User findById(Long id);
-    User deleteUser(Long id);
+    void deleteUser(Long id);
 }

@@ -35,6 +35,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updateUser(User user, Long id) {
+
+        User existingUser = userRepository.findById(id);
+
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPassword(bCryptPasswordEncoder.encode(existingUser.getPassword()));
+
+        return userRepository.save(existingUser);
+    }
+
+    @Override
     public User findByEmail(String email) {
 
         return userRepository.findByEmail(email);
@@ -46,8 +59,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User deleteUser(Long id) {
-       return userRepository.deleteById(id);
+    public void deleteUser(Long id) {
+       userRepository.deleteUserById(id);
     }
 
 
