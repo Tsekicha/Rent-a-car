@@ -1,17 +1,18 @@
 package com.example.rentacar.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.Instant;
+
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "reservations")
 public class Reservation {
@@ -23,8 +24,9 @@ public class Reservation {
     @Column(name = "starting_rent_date")
     private Instant startingRentDate;
     @Column(name = "final_rent_date")
-    private Instant finalRentDate;
-
+    private Instant expirationRentDate;
+    @Column(name = "reservation_price")
+    private BigDecimal finalPrice;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -33,6 +35,5 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
-
 
 }

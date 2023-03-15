@@ -5,8 +5,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-@Getter
+
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -26,4 +27,6 @@ public class Car {
     private int seat;
     @Column(name = "daily_price",nullable = false)
     private BigDecimal dailyPrice;
+
+
 }
