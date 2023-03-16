@@ -29,7 +29,7 @@ public class UserController {
                 .body(userService.registerUser(userRequest));
     }
     @GetMapping(path = "/{id}")
-    ResponseEntity<User> getUserById(@PathVariable Long id){
+    ResponseEntity<User> getUserById(@PathVariable("id") Long id){
         return  ResponseEntity
                 .status(HttpStatus.FOUND)
                 .body(userRepository.findById(id));

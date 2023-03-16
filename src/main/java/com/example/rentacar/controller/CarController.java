@@ -32,7 +32,7 @@ public class CarController {
     }
 
     @GetMapping(path = "/{id}")
-    ResponseEntity<Car> getCarById(@PathVariable Long id){
+    ResponseEntity<Car> getCarById(@PathVariable("id") Long id){
         return ResponseEntity
                 .status(HttpStatus.FOUND)
                 .body(carRepository.findById(id));

@@ -2,6 +2,7 @@ package com.example.rentacar.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.annotation.Lazy;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -28,12 +29,13 @@ public class Reservation {
     @Column(name = "reservation_price")
     private BigDecimal finalPrice;
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
-
 }

@@ -3,8 +3,12 @@ spring:
     url: jdbc:mysql://localhost:3306/rent-a-car?createDatabaseIfNotExist=true
     username: root
     password:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
+      enable_lazy_load_no_trans: true
     show-sql: true

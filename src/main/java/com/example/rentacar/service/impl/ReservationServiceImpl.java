@@ -7,16 +7,23 @@ import com.example.rentacar.dto.ReservationResponse;
 import com.example.rentacar.entity.Car;
 import com.example.rentacar.entity.Reservation;
 import com.example.rentacar.entity.User;
+import com.example.rentacar.exception.ResourceNotFoundException;
+import com.example.rentacar.repository.CarRepository;
 import com.example.rentacar.repository.ReservationRepository;
+import com.example.rentacar.repository.UserRepository;
 import com.example.rentacar.service.CarService;
 import com.example.rentacar.service.ReservationService;
 import com.example.rentacar.service.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -26,13 +33,17 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final CarService carService;
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final CarRepository carRepository;
 
     @Autowired
-    public ReservationServiceImpl(ReservationConvertor reservationConvertor, ReservationRepository reservationRepository, CarService carService, UserService userService) {
+    public ReservationServiceImpl(ReservationConvertor reservationConvertor, ReservationRepository reservationRepository, CarService carService, UserService userService, UserRepository userRepository, CarRepository carRepository) {
         this.reservationConvertor = reservationConvertor;
         this.reservationRepository = reservationRepository;
         this.carService = carService;
         this.userService = userService;
+        this.userRepository = userRepository;
+        this.carRepository = carRepository;
     }
 
     @Override
@@ -54,21 +65,50 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation findReservationByUser(User user) {
-        return null;
-    }
-
-    @Override
-    public Reservation findReservationByCar(Car car) {
-
-        return null;
-    }
-
-    @Override
     public void deleteReservation(Long id) {
         reservationRepository.deleteById(id);
     }
 
+    @Override
+    public List<Reservation> getReservationsByUser(Long userId) {
+        return reservationRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<Reservation> getReservationByCar(Long carID) {
+        return reservationRepository.findByCarId(carID);
+    }
+
+    @Override
+    public List<Reservation> getReservationByPeriod(String period) {
+        return null;
+    }
+
+
+    @Override
+    public Reservation updateReservationUser(Long reservationId, Long userId) {
+
+        Reservation reservation = reservationRepository.findById(reservationId);
+        User user = userRepository.findById(userId);
+        reservation.setUser(user);
+        return reservationRepository.save(reservation);
+    }
+
+    @Override
+    public Reservation updateReservationDate(Long reservationId, Reservation reservation) {
+
+        Optional<Reservation> optionalReservation = Optional.ofNullable(reservationRepository.findById(reservationId));
+        if (optionalReservation.isPresent()) {
+            Reservation existingReservation = optionalReservation.get();
+            existingReservation.setExpirationRentDate(reservation.getExpirationRentDate());
+            return reservationRepository.save(existingReservation);
+        } else {
+            throw new ResourceNotFoundException("Reservation not found with ID " + reservationId);
+        }
+    }
+    public List<Reservation> findReservationsByPeriod(Instant startDate, Instant endDate){
+        return reservationRepository.findReservationsForPeriod(startDate, endDate);
+    }
     @Override
     public BigDecimal reservationPrice(Instant firstDate, Instant lastDate, Car car) {
 

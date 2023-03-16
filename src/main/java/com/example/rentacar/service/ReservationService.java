@@ -9,18 +9,22 @@ import com.example.rentacar.entity.User;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 
 public interface ReservationService {
     ReservationResponse saveReservation(ReservationRequest reservationRequest);
     Reservation findReservationById(Long id);
-    Reservation findReservationByUser(User user);
-    Reservation findReservationByCar(Car car);
-   // Reservation findReservationByPeriod();
     void deleteReservation(Long id);
-   // Reservation updateReservationCar();
-   // Reservation updateReservationDate();
+
     BigDecimal reservationPrice(Instant firstDate, Instant lastDate, Car car);
+    List<Reservation> getReservationsByUser(Long userId);
+    List<Reservation> getReservationByCar(Long carID);
+    List<Reservation> getReservationByPeriod(String period);
+    List<Reservation> findReservationsByPeriod(Instant start, Instant end);
+    Reservation updateReservationUser(Long reservationId,Long userId);
+    Reservation updateReservationDate(Long reservationId, Reservation reservation);
+
 
 
 }
