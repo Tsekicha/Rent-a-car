@@ -60,7 +60,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation findReservationById(Long id) {
+    public Reservation getReservationById(Long id) {
         return reservationRepository.findById(id);
     }
 
@@ -78,12 +78,6 @@ public class ReservationServiceImpl implements ReservationService {
     public List<Reservation> getReservationByCar(Long carID) {
         return reservationRepository.findByCarId(carID);
     }
-
-    @Override
-    public List<Reservation> getReservationByPeriod(String period) {
-        return null;
-    }
-
 
     @Override
     public Reservation updateReservationUser(Long reservationId, Long userId) {
@@ -106,7 +100,7 @@ public class ReservationServiceImpl implements ReservationService {
             throw new ResourceNotFoundException("Reservation not found with ID " + reservationId);
         }
     }
-    public List<Reservation> findReservationsByPeriod(Instant startDate, Instant endDate){
+    public List<Reservation> getReservationsByPeriod(Instant startDate, Instant endDate){
         return reservationRepository.findReservationsForPeriod(startDate, endDate);
     }
     @Override

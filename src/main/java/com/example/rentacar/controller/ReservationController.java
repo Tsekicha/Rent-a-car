@@ -27,7 +27,8 @@ public class ReservationController {
     private ReservationService reservationService;
     @Autowired
     private ReservationRepository reservationRepository;
-    @PostMapping(path = "/saveReservation")
+
+    @PostMapping()
     ResponseEntity<ReservationResponse> saveReservation(@RequestBody ReservationRequest reservationRequest){
 
         return ResponseEntity
@@ -76,12 +77,12 @@ public class ReservationController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("/getPeriodReservation")
+    @GetMapping()
     public ResponseEntity<List<Reservation>> getReservationsForPeriod(
             @RequestParam(name = "start_date") Instant startDate,
             @RequestParam(name = "end_date") Instant endDate
     ) {
-        List<Reservation> reservations = reservationService.findReservationsByPeriod(startDate, endDate);
+        List<Reservation> reservations = reservationService.getReservationsByPeriod(startDate, endDate);
         return ResponseEntity.ok(reservations);
     }
 

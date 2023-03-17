@@ -48,10 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-
-        return userRepository.findByEmail(email);
-    }
+    public User findByEmail(String email) { return userRepository.findByEmail(email); }
 
     @Override
     public User findById(Long id) {
@@ -59,9 +56,5 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
-       userRepository.deleteUserById(id);
-    }
-
-
+    public void deleteUser(Long id) { userRepository.deleteUserById(id); }
 }

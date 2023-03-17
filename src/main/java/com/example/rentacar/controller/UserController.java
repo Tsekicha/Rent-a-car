@@ -21,7 +21,7 @@ public class UserController {
     private UserRepository userRepository;
 
 
-    @PostMapping(path = "/register")
+    @PostMapping()
     ResponseEntity<UserResponse> register(@RequestBody UserRequest userRequest){
 
         return ResponseEntity

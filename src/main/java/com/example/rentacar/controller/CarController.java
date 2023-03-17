@@ -24,7 +24,7 @@ public class CarController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(path = "/createCar")
+    @PostMapping()
     ResponseEntity<CarResponse> saveCar(@RequestBody CarRequest carRequest){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
